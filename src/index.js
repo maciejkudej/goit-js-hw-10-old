@@ -1,20 +1,25 @@
 import './css/styles.css';
 
 const DEBOUNCE_DELAY = 300;
-
+const debounce = require('lodash.debounce');
 const search = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
 
-search.addEventListener('input', evt => {
-  evt.preventDefault();
-  fetchCountries()
-    .then(countries => renderCountriesList(countries))
-    .catch(error => console.log(error));
-});
+search.addEventListener(
+  'input',
+  debounce(evt => {
+    evt.preventDefault();
+    console.log(evt.target.value);
+    let searchValue = evt.target.value;
+    fetchCountries(searchValue)
+      .then(countries => renderCountriesList(countries))
+      .catch(error => console.log(error));
+  }, DEBOUNCE_DELAY)
+);
 
-function fetchCountries() {
+function fetchCountries(countryName) {
   return fetch(
-    'https://restcountries.com/v3.1/name/pol?fields=name,capital,population,flags,languages'
+    `https://restcountries.com/v3.1/name/${countryName}?fields=name,capital,population,flags,languages`
   ).then(response => {
     if (!response.ok) {
       throw new Error(response.status);
