@@ -19,7 +19,6 @@ search.addEventListener(
   'input',
   debounce(evt => {
     evt.preventDefault();
-    console.log(evt.target.value);
     let searchValue = evt.target.value;
     fetchCountries(searchValue.trim())
       .then(countries => renderCountriesList(countries))
@@ -28,7 +27,6 @@ search.addEventListener(
 );
 
 function renderCountriesList(countries) {
-  console.log(countries.length);
   countryList.innerHTML = '';
   countryInfo.innerHTML = '';
   if (countries.length > 10) {

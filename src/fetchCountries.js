@@ -7,7 +7,6 @@ export function fetchCountries(countryName) {
   return fetch(
     `https://restcountries.com/v3.1/name/${countryName}?fields=name,capital,population,flags,languages`
   ).then(response => {
-    console.log(response.status);
     if (response.status == 404) {
       countryList.innerHTML = '';
       countryInfo.innerHTML = '';
